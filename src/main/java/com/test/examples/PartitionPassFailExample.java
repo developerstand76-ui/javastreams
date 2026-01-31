@@ -10,6 +10,15 @@ public final class PartitionPassFailExample {
     private PartitionPassFailExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Partition Pass Fail Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the partition example
+        run();
+    }
+
     // Practical Use 4: Partitioning pass/fail sets
     public static void run() {
         // Input: scores = [95, 82, 67, 49, 73, 58]

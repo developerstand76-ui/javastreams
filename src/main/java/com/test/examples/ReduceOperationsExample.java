@@ -13,6 +13,15 @@ public final class ReduceOperationsExample {
     private ReduceOperationsExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Reduce Operations Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the reduce operations example
+        run();
+    }
+
     // EXAMPLE 7: Comprehensive reduce() operations
     public static void run() {
         // Input: numbers = [5, 12, 3, 18, 7, 25, 9, 2]

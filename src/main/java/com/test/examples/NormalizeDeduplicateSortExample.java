@@ -11,6 +11,15 @@ public final class NormalizeDeduplicateSortExample {
     private NormalizeDeduplicateSortExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Normalize Deduplicate Sort Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the normalization example
+        run();
+    }
+
     // Practical Use 1: Normalize + deduplicate + sort
     public static void run() {
         // Input: rawNames = [" Alice ", "bob", "ALICE", "  Bob ", "Clara", "clara "]

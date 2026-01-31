@@ -11,6 +11,15 @@ public final class WordFrequencyTopNExample {
     private WordFrequencyTopNExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Word Frequency Top N Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the word frequency example
+        run();
+    }
+
     // Practical Use 2: Word frequency with top-N results
     public static void run() {
         // Input: text = "Java streams make data processing with streams concise and readable"

@@ -10,6 +10,15 @@ public final class MultiFieldSortExample {
     private MultiFieldSortExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Multi Field Sort Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the multi-field sort example
+        run();
+    }
+
     // Practical Use 6: Multi-field sorting
     public static void run() {
         // Input: people = [Mina(31), Alex(29), Alex(35), Zoe(25)]

@@ -10,6 +10,15 @@ public final class CharacterFrequencyExample {
     private CharacterFrequencyExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Character Frequency Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the character frequency example
+        run();
+    }
+
     // EXAMPLE 6: Character Frequency (Original example)
     public static void run() {
         // Input: String name = "Haritha Reddy"

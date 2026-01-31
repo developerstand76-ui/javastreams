@@ -10,6 +10,15 @@ public final class RunningTotalsExample {
     private RunningTotalsExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Running Totals Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the running totals example
+        run();
+    }
+
     // Practical Use 5: Running totals (window-like logic)
     public static void run() {
         // Input: amounts = [5, 10, 3, 7, 2]

@@ -9,6 +9,15 @@ public final class InvalidRecordCollectionExample {
     private InvalidRecordCollectionExample() {
     }
 
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("Invalid Record Collection Example - Run Independently");
+        System.out.println("========================================");
+        
+        // Run the validation example
+        run();
+    }
+
     // Practical Use 3: Validation and invalid record collection
     public static void run() {
         // Input: ids = ["A-100", "", "B-200", "  ", "C-300", "INVALID#"]
