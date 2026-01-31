@@ -15,8 +15,24 @@ public final class ReduceOperationsExample {
 
     // EXAMPLE 7: Comprehensive reduce() operations
     public static void run() {
-        // Input: numbers, words, prices, and sample orders defined in-method
+        // Input: numbers = [5, 12, 3, 18, 7, 25, 9, 2]
+        //        words = ["Hello", "World", "Java", "Streams"]
+        //        prices = [10.5, 20.0, 15.75, 8.25]
+        //        sampleOrders = [O1: C1 $100, O2: C1 $200, O3: C1 $150]
         // Output: Prints results of 12 reduce-based examples (sum, product, min/max, etc.)
+        // Expected Outputs:
+        //   1. SUM: 81 (5+12+3+18+7+25+9+2)
+        //   2. PRODUCT: 120 (2*3*4*5)
+        //   3. MAX: 25
+        //   4. MIN: 2
+        //   5. STRING CONCAT: "HelloWorldJavaStreams" or "Hello, World, Java, Streams"
+        //   6. COUNT: 8
+        //   7. AVERAGE: $13.63
+        //   8. CONDITIONAL: 32 (sum of even numbers: 12+18+2)
+        //   9. COMPLEX: "Numbers: [5, 12, 3, 18, 7, 25, 9, 2]"
+        //   10. LONGEST: "Streams"
+        //   11. PARALLEL: 5050 (sum 1-100)
+        //   12. CUSTOM OBJECT: max order, total $450.00, all items [A, B, C, D]
         System.out.println("\n--- Example 7: REDUCE() OPERATIONS ---");
 
         List<Integer> numbers = Arrays.asList(5, 12, 3, 18, 7, 25, 9, 2);

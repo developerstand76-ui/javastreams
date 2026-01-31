@@ -12,11 +12,20 @@ public final class RunningTotalsExample {
 
     // Practical Use 5: Running totals (window-like logic)
     public static void run() {
-        // Input: amounts list
+        // Input: amounts = [5, 10, 3, 7, 2]
         // Output: Prints running totals list
+        // Expected Output:
+        //   Amounts: [5, 10, 3, 7, 2]
+        //   Running totals: [5, 15, 18, 25, 27]
         System.out.println("\n--- Practical Use: Running Totals ---");
         List<Integer> amounts = Arrays.asList(5, 10, 3, 7, 2);
 
+        // IntStream.range() - creates stream of indices (0, 1, 2, ...)
+        // mapToObj() - for each index, creates sublist [0..i] and sums it
+        //   subList() - gets elements from start to current index
+        //   stream().mapToInt() - converts to IntStream
+        //   sum() - calculates sum of sublist
+        // collect() - gathers all sums into list
         List<Integer> runningTotals = IntStream.range(0, amounts.size())
             .mapToObj(i -> amounts.subList(0, i + 1).stream().mapToInt(Integer::intValue).sum())
             .collect(Collectors.toList());

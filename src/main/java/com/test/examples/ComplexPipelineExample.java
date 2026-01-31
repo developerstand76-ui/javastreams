@@ -15,7 +15,15 @@ public final class ComplexPipelineExample {
     // EXAMPLE 5: Complex pipeline - Top 2 customers by total spending
     public static void run(List<Order> orders) {
         // Input: List<Order> orders
+        //   O1: C1, $150.50, COMPLETED
+        //   O2: C2, $89.99, PENDING
+        //   O3: C1, $200.00, COMPLETED
+        //   O4: C3, $45.00, CANCELLED
+        //   O5: C2, $320.75, COMPLETED
         // Output: Prints top 2 customers by completed-order spending (traditional vs stream)
+        // Expected Output:
+        //   C1: $350.50 (150.50 + 200.00)
+        //   C2: $320.75
         System.out.println("\n--- Example 5: COMPLEX PIPELINE (Top 2 customers by spending) ---");
 
         // TRADITIONAL APPROACH
@@ -38,17 +46,27 @@ public final class ComplexPipelineExample {
 
         // STREAM APPROACH
         System.out.println("\nStream API:");
+        // Multi-stage stream pipeline:
+        // 1. filter() - keep only COMPLETED orders
+        // 2. groupingBy() - group by customerId with summingDouble downstream collector
+        //    summingDouble() - sums the amounts for each customer
+        // 3. entrySet() - get map entries, then stream() to create new stream
+        // 4. sorted() - sort entries by value in descending order
+        //    comparingByValue() - compares map entries by value
+        //    reversed() - reverses sort order (highest first)
+        // 5. limit() - keeps only first N elements (top 2)
+        // 6. forEach() - terminal operation to print each entry
         orders.stream()
-            .filter(order -> "COMPLETED".equals(order.getStatus()))
-            .collect(Collectors.groupingBy(
+            .filter(order -> "COMPLETED".equals(order.getStatus()))  // step 1: filter
+            .collect(Collectors.groupingBy(                          // step 2: group & sum
                 Order::getCustomerId,
                 Collectors.summingDouble(Order::getAmount)
             ))
-            .entrySet()
-            .stream()
-            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
-            .limit(2)
-            .forEach(entry ->
+            .entrySet()                                              // get entries
+            .stream()                                                // step 3: new stream
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())  // step 4: sort desc
+            .limit(2)                                                // step 5: top 2
+            .forEach(entry ->                                        // step 6: print
                 System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()))
             );
     }

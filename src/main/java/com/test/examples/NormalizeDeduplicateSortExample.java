@@ -13,15 +13,22 @@ public final class NormalizeDeduplicateSortExample {
 
     // Practical Use 1: Normalize + deduplicate + sort
     public static void run() {
-        // Input: rawNames list with mixed case/spacing
+        // Input: rawNames = [" Alice ", "bob", "ALICE", "  Bob ", "Clara", "clara "]
         // Output: Prints normalized, deduplicated, and sorted names
+        // Expected Output:
+        //   Input: [ Alice , bob, ALICE,   Bob , Clara, clara ]
+        //   Normalized: [alice, bob, clara]
         System.out.println("\n--- Practical Use: Normalize + Deduplicate + Sort ---");
         List<String> rawNames = Arrays.asList(" Alice ", "bob", "ALICE", "  Bob ", "Clara", "clara ");
 
+        // stream() - creates stream from list
+        // map() - transforms each element (trim whitespace, convert to lowercase)
+        // filter() - removes blank strings
+        // collect() - gathers into TreeSet (automatically sorts and deduplicates)
         Set<String> normalizedNames = rawNames.stream()
-            .map(name -> name.trim().toLowerCase(Locale.ROOT))
-            .filter(name -> !name.isBlank())
-            .collect(Collectors.toCollection(java.util.TreeSet::new));
+            .map(name -> name.trim().toLowerCase(Locale.ROOT))    // normalize: trim + lowercase
+            .filter(name -> !name.isBlank())                      // remove empty strings
+            .collect(Collectors.toCollection(java.util.TreeSet::new));  // collect to sorted set
 
         System.out.println("Input: " + rawNames);
         System.out.println("Normalized: " + normalizedNames);
