@@ -39,15 +39,78 @@ streams/
                         └── WordFrequencyTopNExample.java
 ```
 
-## Build & Run (Maven)
-Requirements:
+## Build & Run
+
+### Requirements
 - Java 17+
 - Maven 3.8+
 
-### Console Application
-From the streams folder:
-- Build: `mvn clean package`
-- Run: `java -cp target/streams-1.0-SNAPSHOT.jar com.test.StreamTest`
+### Building the Project
+```bash
+cd streams
+mvn clean package -DskipTests
+```
+
+### Running Individual Examples (Recommended)
+
+Each example class has its own `main()` method for independent execution:
+
+```bash
+# Compile first
+mvn compile
+
+# Run individual examples
+java -cp target/classes com.test.examples.FilteringExample
+java -cp target/classes com.test.examples.MappingExample
+java -cp target/classes com.test.examples.AggregationExample
+java -cp target/classes com.test.examples.GroupingExample
+java -cp target/classes com.test.examples.ComplexPipelineExample
+java -cp target/classes com.test.examples.CharacterFrequencyExample
+java -cp target/classes com.test.examples.ReduceOperationsExample
+java -cp target/classes com.test.examples.NormalizeDeduplicateSortExample
+java -cp target/classes com.test.examples.WordFrequencyTopNExample
+java -cp target/classes com.test.examples.InvalidRecordCollectionExample
+java -cp target/classes com.test.examples.PartitionPassFailExample
+java -cp target/classes com.test.examples.RunningTotalsExample
+java -cp target/classes com.test.examples.MultiFieldSortExample
+```
+
+### Running All Examples with ExamplesRunner
+
+Menu-driven console runner for selecting which examples to run:
+
+```bash
+# Run ExamplesRunner with example selection
+java -cp target/classes com.test.ExamplesRunner 1        # Run example 1
+java -cp target/classes com.test.ExamplesRunner all      # Run all examples
+```
+
+Or use Maven:
+
+```bash
+mvn compile exec:java -Dexec.args="1"
+mvn compile exec:java -Dexec.args="all"
+```
+
+### REST API (Spring Boot)
+
+```bash
+# Start REST API server on port 8080
+java -jar target/streams-1.0-SNAPSHOT.jar
+
+# Access Swagger UI
+http://localhost:8080/swagger-ui.html
+
+# API Endpoints
+GET  http://localhost:8080/api/streams                 # List all endpoints
+POST http://localhost:8080/api/streams/filter          # Filter orders
+POST http://localhost:8080/api/streams/map             # Extract customer IDs
+POST http://localhost:8080/api/streams/aggregate       # Calculate revenue
+POST http://localhost:8080/api/streams/group           # Group orders
+POST http://localhost:8080/api/streams/character-frequency  # Analyze text
+
+POST http://localhost:8080/api/practical               # Practical examples
+```
 
 ### REST API with Swagger UI
 Start the Spring Boot application:
