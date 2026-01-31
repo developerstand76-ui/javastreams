@@ -66,30 +66,75 @@ public final class ComplexPipelineExample {
             System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
         }
 
-        // STREAM APPROACH
-        System.out.println("\nStream API:");
-        // Multi-stage stream pipeline:
-        // 1. filter() - keep only COMPLETED orders
-        // 2. groupingBy() - group by customerId with summingDouble downstream collector
-        //    summingDouble() - sums the amounts for each customer
-        // 3. entrySet() - get map entries, then stream() to create new stream
-        // 4. sorted() - sort entries by value in descending order
-        //    comparingByValue() - compares map entries by value
-        //    reversed() - reverses sort order (highest first)
-        // 5. limit() - keeps only first N elements (top 2)
-        // 6. forEach() - terminal operation to print each entry
-        orders.stream()
-            .filter(order -> "COMPLETED".equals(order.getStatus()))  // step 1: filter
-            .collect(Collectors.groupingBy(                          // step 2: group & sum
+        // STREAM APPROACH WITH STEP-BY-STEP OUTPUT
+        System.out.println("\nStream API (with step-by-step output):");
+        
+        // Step 1: Filter - keep only COMPLETED orders
+        System.out.println("\nStep 1: Filter COMPLETED orders");
+        List<Order> completedOrders = orders.stream()
+            .filter(order -> {
+                boolean isCompleted = "COMPLETED".equals(order.getStatus());
+                if (isCompleted) {
+                    System.out.println("  ✓ " + order.getId() + " -> Customer: " + order.getCustomerId() + ", Amount: $" + order.getAmount());
+                }
+                return isCompleted;
+            })
+            .collect(Collectors.toList());
+        System.out.println("  Result: " + completedOrders.size() + " completed orders");
+
+        // Step 2: Group by Customer ID and Sum Amounts
+        System.out.println("\nStep 2: Group by Customer & Sum Amounts");
+        Map<String, Double> customerSpending = completedOrders.stream()
+            .collect(Collectors.groupingBy(
                 Order::getCustomerId,
                 Collectors.summingDouble(Order::getAmount)
-            ))
-            .entrySet()                                              // get entries
-            .stream()                                                // step 3: new stream
-            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())  // step 4: sort desc
-            .limit(2)                                                // step 5: top 2
-            .forEach(entry ->                                        // step 6: print
-                System.out.println(entry.getKey() + ": $" + String.format("%.2f", entry.getValue()))
+            ));
+        System.out.println("  Grouped Map:");
+        customerSpending.forEach((customer, total) ->
+            System.out.println("    " + customer + " -> $" + String.format("%.2f", total))
+        );
+
+        // Step 3: Why entrySet()? - Convert Map to Set of Entries
+        System.out.println("\nStep 3: Convert Map to entrySet()");
+        System.out.println("  Why entrySet()? Maps are NOT streams. We need entrySet() to convert");
+        System.out.println("  the Map<String, Double> into a Set<Map.Entry<String, Double>>");
+        System.out.println("  Then .stream() converts that Set into a Stream we can use!");
+        System.out.println("  Entries created:");
+        customerSpending.entrySet().forEach(entry ->
+            System.out.println("    Entry[key=" + entry.getKey() + ", value=$" + String.format("%.2f", entry.getValue()) + "]")
+        );
+
+        // Step 4: Sort by Amount (Descending)
+        System.out.println("\nStep 4: Sort by Amount (Highest First)");
+        List<Map.Entry<String, Double>> sortedEntries = customerSpending.entrySet().stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .collect(Collectors.toList());
+        System.out.println("  Sorted result:");
+        for (int i = 0; i < sortedEntries.size(); i++) {
+            Map.Entry<String, Double> entry = sortedEntries.get(i);
+            System.out.println("    [" + (i + 1) + "] " + entry.getKey() + " -> $" + String.format("%.2f", entry.getValue()));
+        }
+
+        // Step 5: Limit to Top 2
+        System.out.println("\nStep 5: Limit to Top 2");
+        List<Map.Entry<String, Double>> topTwo = customerSpending.entrySet().stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .limit(2)
+            .collect(Collectors.toList());
+        System.out.println("  Top 2 customers:");
+        for (int i = 0; i < topTwo.size(); i++) {
+            Map.Entry<String, Double> entry = topTwo.get(i);
+            System.out.println("    [" + (i + 1) + "] " + entry.getKey() + " -> $" + String.format("%.2f", entry.getValue()));
+        }
+
+        // Final Result: Print Top 2
+        System.out.println("\nFinal Result (Top 2 Customers by Spending):");
+        customerSpending.entrySet()
+            .stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .limit(2)
+            .forEach(entry ->
+                System.out.println("  " + entry.getKey() + ": $" + String.format("%.2f", entry.getValue()))
             );
     }
 }
