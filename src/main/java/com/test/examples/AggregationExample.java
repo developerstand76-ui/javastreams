@@ -34,47 +34,10 @@ public final class AggregationExample {
 
     // EXAMPLE 3: Calculate total revenue from completed orders
     public static void run(List<Order> orders) {
-        // Input: List<Order> orders
-        //   O1: C1, $150.50, COMPLETED
-        //   O2: C2, $89.99, PENDING
-        //   O3: C1, $200.00, COMPLETED
-        //   O4: C3, $45.00, CANCELLED
-        //   O5: C2, $320.75, COMPLETED
-        // Output: Prints total revenue from COMPLETED orders using loop, stream sum, and reduce
-        // Expected Output:
-        //   Total Revenue: $671.25 (150.50 + 200.00 + 320.75)
-        System.out.println("\n--- Example 3: AGGREGATION (Total revenue from COMPLETED orders) ---");
-
-        // TRADITIONAL APPROACH
-        System.out.println("\nTraditional Loop:");
-        double totalTraditional = 0.0;
-        for (Order order : orders) {
-            if ("COMPLETED".equals(order.getStatus())) {
-                totalTraditional += order.getAmount();
-            }
-        }
-        System.out.println("Total Revenue: $" + String.format("%.2f", totalTraditional));
-
-        // STREAM APPROACH
-        System.out.println("\nStream API:");
-        // stream() - converts collection to stream
-        // filter() - keeps only COMPLETED orders
-        // mapToDouble() - extracts amount as primitive double (more efficient than boxed Double)
-        // sum() - terminal operation that adds all double values
         double totalStream = orders.stream()
             .filter(order -> "COMPLETED".equals(order.getStatus()))
-            .mapToDouble(Order::getAmount)       // extract as primitive double
-            .sum();                              // sum all values
+            .mapToDouble(Order::getAmount)
+            .sum();
         System.out.println("Total Revenue: $" + String.format("%.2f", totalStream));
-
-        // BONUS: Using reduce
-        System.out.println("\nStream with reduce():");
-        // reduce() - combines elements using accumulator function (identity, accumulator)
-        // identity: initial value (0.0), accumulator: how to combine two values (Double::sum)
-        double totalReduce = orders.stream()
-            .filter(order -> "COMPLETED".equals(order.getStatus()))
-            .map(Order::getAmount)               // extract amount as Double
-            .reduce(0.0, Double::sum);           // reduce: (0.0 + a1 + a2 + a3...)
-        System.out.println("Total Revenue: $" + String.format("%.2f", totalReduce));
     }
 }
