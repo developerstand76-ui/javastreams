@@ -26,6 +26,7 @@ public class ExamplesRunner {
             case "11", "partition" -> PartitionPassFailExample.main(new String[]{});
             case "12", "running" -> RunningTotalsExample.main(new String[]{});
             case "13", "multifield" -> MultiFieldSortExample.main(new String[]{});
+            case "14", "sort" -> SortingExample.main(new String[]{});
             case "all" -> runAll();
             default -> {
                 System.out.println("Unknown example: " + example);
@@ -52,6 +53,7 @@ public class ExamplesRunner {
         PartitionPassFailExample.main(new String[]{});
         RunningTotalsExample.main(new String[]{});
         MultiFieldSortExample.main(new String[]{});
+        SortingExample.main(new String[]{});
         
         System.out.println("\n╔═══════════════════════════════════════════════════════════════╗");
         System.out.println("║               ALL EXAMPLES COMPLETED SUCCESSFULLY               ║");
@@ -77,6 +79,7 @@ public class ExamplesRunner {
         System.out.println("  11 or partition    - Partition Scores (Pass/Fail)");
         System.out.println("  12 or running      - Running Totals");
         System.out.println("  13 or multifield   - Multi-field Sort");
+        System.out.println("  14 or sort         - Various Sorting Scenarios");
         System.out.println("  all                - Run all examples\n");
         System.out.println("Examples:");
         System.out.println("  java -cp target/streams-1.0-SNAPSHOT.jar com.test.ExamplesRunner 1");
