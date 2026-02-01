@@ -52,13 +52,6 @@ public final class ReduceOperationsExample {
         System.out.println("\n1. SUM (Adding numbers):");
         System.out.println("Numbers: " + numbers);
 
-        // Traditional
-        int sumTraditional = 0;
-        for (int num : numbers) {
-            sumTraditional += num;
-        }
-        System.out.println("Traditional: " + sumTraditional);
-
         // Stream reduce
         int sumReduce = numbers.stream()
             .reduce(0, (a, b) -> a + b);
@@ -74,13 +67,6 @@ public final class ReduceOperationsExample {
         List<Integer> smallNumbers = Arrays.asList(2, 3, 4, 5);
         System.out.println("Numbers: " + smallNumbers);
 
-        // Traditional
-        int productTraditional = 1;
-        for (int num : smallNumbers) {
-            productTraditional *= num;
-        }
-        System.out.println("Traditional: " + productTraditional);
-
         // Stream reduce
         int productReduce = smallNumbers.stream()
             .reduce(1, (a, b) -> a * b);
@@ -89,15 +75,6 @@ public final class ReduceOperationsExample {
         // 3. MAX - Finding maximum value
         System.out.println("\n3. MAX (Finding maximum value):");
         System.out.println("Numbers: " + numbers);
-
-        // Traditional
-        int maxTraditional = Integer.MIN_VALUE;
-        for (int num : numbers) {
-            if (num > maxTraditional) {
-                maxTraditional = num;
-            }
-        }
-        System.out.println("Traditional: " + maxTraditional);
 
         // Stream reduce
         int maxReduce = numbers.stream()
@@ -118,15 +95,6 @@ public final class ReduceOperationsExample {
         System.out.println("\n4. MIN (Finding minimum value):");
         System.out.println("Numbers: " + numbers);
 
-        // Traditional
-        int minTraditional = Integer.MAX_VALUE;
-        for (int num : numbers) {
-            if (num < minTraditional) {
-                minTraditional = num;
-            }
-        }
-        System.out.println("Traditional: " + minTraditional);
-
         // Stream reduce
         int minReduce = numbers.stream()
             .reduce(Integer.MAX_VALUE, (a, b) -> a < b ? a : b);
@@ -140,13 +108,6 @@ public final class ReduceOperationsExample {
         // 5. STRING CONCATENATION
         System.out.println("\n5. STRING CONCATENATION:");
         System.out.println("Words: " + words);
-
-        // Traditional
-        String concatTraditional = "";
-        for (String word : words) {
-            concatTraditional += word;
-        }
-        System.out.println("Traditional: " + concatTraditional);
 
         // Stream reduce - simple concatenation
         String concatReduce = words.stream()
@@ -167,13 +128,6 @@ public final class ReduceOperationsExample {
         System.out.println("\n6. COUNT (Counting elements):");
         System.out.println("Numbers: " + numbers);
 
-        // Traditional
-        int countTraditional = 0;
-        for (int num : numbers) {
-            countTraditional++;
-        }
-        System.out.println("Traditional: " + countTraditional);
-
         // Stream reduce (counting ones)
         long countReduce = numbers.stream()
             .map(n -> 1)
@@ -187,14 +141,6 @@ public final class ReduceOperationsExample {
         // 7. AVERAGE - Custom aggregation
         System.out.println("\n7. AVERAGE (using reduce for custom aggregation):");
         System.out.println("Prices: " + prices);
-
-        // Traditional
-        double sumPricesTraditional = 0.0;
-        for (double price : prices) {
-            sumPricesTraditional += price;
-        }
-        double avgTraditional = sumPricesTraditional / prices.size();
-        System.out.println("Traditional average: $" + String.format("%.2f", avgTraditional));
 
         // Stream reduce - sum then divide
         double sumPrices = prices.stream()
@@ -211,15 +157,6 @@ public final class ReduceOperationsExample {
         System.out.println("\n8. CONDITIONAL AGGREGATION (Sum of even numbers):");
         System.out.println("Numbers: " + numbers);
 
-        // Traditional
-        int evenSumTraditional = 0;
-        for (int num : numbers) {
-            if (num % 2 == 0) {
-                evenSumTraditional += num;
-            }
-        }
-        System.out.println("Traditional: " + evenSumTraditional);
-
         // Stream reduce with filter
         int evenSumReduce = numbers.stream()
             .filter(n -> n % 2 == 0)
@@ -230,17 +167,6 @@ public final class ReduceOperationsExample {
         System.out.println("\n9. COMPLEX REDUCE (Building summary):");
         System.out.println("Numbers: " + numbers);
 
-        // Traditional
-        StringBuilder summaryTraditional = new StringBuilder("Numbers: [");
-        for (int i = 0; i < numbers.size(); i++) {
-            summaryTraditional.append(numbers.get(i));
-            if (i < numbers.size() - 1) {
-                summaryTraditional.append(", ");
-            }
-        }
-        summaryTraditional.append("]");
-        System.out.println("Traditional: " + summaryTraditional);
-
         // Stream reduce
         String summaryReduce = numbers.stream()
             .map(String::valueOf)
@@ -250,15 +176,6 @@ public final class ReduceOperationsExample {
         // 10. LONGEST STRING - Custom comparison
         System.out.println("\n10. LONGEST STRING (Custom comparison):");
         System.out.println("Words: " + words);
-
-        // Traditional
-        String longestTraditional = "";
-        for (String word : words) {
-            if (word.length() > longestTraditional.length()) {
-                longestTraditional = word;
-            }
-        }
-        System.out.println("Traditional: " + longestTraditional);
 
         // Stream reduce
         String longestReduce = words.stream()
