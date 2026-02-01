@@ -10,6 +10,10 @@ This class illustrates:
 - Performance benefits and code readability improvements
 - Best practices for handling collections and data transformations
 
+## Documentation
+- **[STANDALONE_EXAMPLES.md](STANDALONE_EXAMPLES.md)** - Standalone CLI examples with detailed input/output/steps
+- **[API_EXAMPLES.md](API_EXAMPLES.md)** - REST API examples with sample requests/responses
+
 ## File Structure
 ```
 streams/
