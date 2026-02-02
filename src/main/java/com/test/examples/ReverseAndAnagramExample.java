@@ -1,8 +1,10 @@
 package com.test.examples;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public final class ReverseAndAnagramExample {
 
@@ -32,15 +34,14 @@ public final class ReverseAndAnagramExample {
         );
         System.out.println("Reversed number: " + reversed);
         
-        // Using streams (digit by digit)
+        // Using simple for loop
         String numStr = String.valueOf(number);
-        int reversedStream = Integer.parseInt(
-            IntStream.range(0, numStr.length())
-                .map(i -> numStr.charAt(numStr.length() - 1 - i))
-                .mapToObj(c -> String.valueOf((char) c))
-                .collect(Collectors.joining())
-        );
-        System.out.println("Reversed (stream): " + reversedStream);
+        String reversedNumStr = "";
+        for (int i = numStr.length() - 1; i >= 0; i--) {
+            reversedNumStr += numStr.charAt(i);
+        }
+        int reversedLoop = Integer.parseInt(reversedNumStr);
+        System.out.println("Reversed (for loop): " + reversedLoop);
         
         // Example 2: Reverse a String
         System.out.println("\n--- Example 2: REVERSE STRING ---");
@@ -51,26 +52,20 @@ public final class ReverseAndAnagramExample {
         String reversedStr = new StringBuilder(text).reverse().toString();
         System.out.println("Reversed (StringBuilder): " + reversedStr);
         
-        // Method 2: Using streams
-        String reversedStream2 = IntStream.range(0, text.length())
-            .map(i -> text.charAt(text.length() - 1 - i))
-            .mapToObj(c -> String.valueOf((char) c))
-            .collect(Collectors.joining());
-        System.out.println("Reversed (stream): " + reversedStream2);
+        // Method 2: Using for loop
+        String reversedLoop2 = "";
+        for (int i = text.length() - 1; i >= 0; i--) {
+            reversedLoop2 += text.charAt(i);
+        }
+        System.out.println("Reversed (for loop): " + reversedLoop2);
         
-        // Method 3: Using streams with boxed
-        String reversedStream3 = text.chars()
-            .mapToObj(c -> (char) c)
-            .collect(Collectors.collectingAndThen(
-                Collectors.toList(),
-                list -> {
-                    java.util.Collections.reverse(list);
-                    return list.stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining());
-                }
-            ));
-        System.out.println("Reversed (stream collect): " + reversedStream3);
+        // Method 3: Using char array
+        char[] chars = text.toCharArray();
+        String reversedArray = "";
+        for (int i = chars.length - 1; i >= 0; i--) {
+            reversedArray += chars[i];
+        }
+        System.out.println("Reversed (char array): " + reversedArray);
         
         // Example 3: Find Anagram Occurrences
         System.out.println("\n--- Example 3: FIND ANAGRAM OCCURRENCES ---");
@@ -84,37 +79,43 @@ public final class ReverseAndAnagramExample {
         String sortedTarget = sortString(target);
         System.out.println("Sorted target: " + sortedTarget);
         
-        // Generate all substrings of length equal to target
+        // Generate all substrings and count anagrams using simple loop
         int targetLength = target.length();
-        long anagramCount = IntStream.rangeClosed(0, source.length() - targetLength)
-            .mapToObj(i -> source.substring(i, i + targetLength))
-            .peek(substring -> System.out.println("  Checking: " + substring + " -> sorted: " + sortString(substring)))
-            .filter(substring -> sortString(substring).equals(sortedTarget))
-            .count();
+        int anagramCount = 0;
+        
+        for (int i = 0; i <= source.length() - targetLength; i++) {
+            String substring = source.substring(i, i + targetLength);
+            String sortedSubstring = sortString(substring);
+            System.out.println("  Checking: " + substring + " -> sorted: " + sortedSubstring);
+            
+            if (sortedSubstring.equals(sortedTarget)) {
+                anagramCount++;
+            }
+        }
         
         System.out.println("\nTotal anagram occurrences: " + anagramCount);
         
-        // Show all matches with positions
+        // Show all matches with positions using simple loop
         System.out.println("\nDetailed matches:");
-        IntStream.rangeClosed(0, source.length() - targetLength)
-            .filter(i -> {
-                String substring = source.substring(i, i + targetLength);
-                return sortString(substring).equals(sortedTarget);
-            })
-            .forEach(i -> {
-                String match = source.substring(i, i + targetLength);
-                System.out.println("  Position " + i + ": '" + match + "' is an anagram of '" + target + "'");
-            });
+        for (int i = 0; i <= source.length() - targetLength; i++) {
+            String substring = source.substring(i, i + targetLength);
+            if (sortString(substring).equals(sortedTarget)) {
+                System.out.println("  Position " + i + ": '" + substring + "' is an anagram of '" + target + "'");
+            }
+        }
         
-        // Example 4: All Unique Anagrams
+        // Example 4: All Unique Anagrams using simple loop
         System.out.println("\n--- Example 4: ALL UNIQUE ANAGRAMS ---");
-        var uniqueAnagrams = IntStream.rangeClosed(0, source.length() - targetLength)
-            .mapToObj(i -> source.substring(i, i + targetLength))
-            .filter(substring -> sortString(substring).equals(sortedTarget))
-            .distinct()
-            .collect(Collectors.toList());
+        Set<String> uniqueAnagrams = new HashSet<>();
         
-        System.out.println("Unique anagrams found: " + uniqueAnagrams);
+        for (int i = 0; i <= source.length() - targetLength; i++) {
+            String substring = source.substring(i, i + targetLength);
+            if (sortString(substring).equals(sortedTarget)) {
+                uniqueAnagrams.add(substring);
+            }
+        }
+        
+        System.out.println("Unique anagrams found: " + new ArrayList<>(uniqueAnagrams));
         
         // Example 5: Complex Example - Find longest palindrome in reversed string
         System.out.println("\n--- Example 5: BONUS - Palindromes in Reversed Text ---");
@@ -125,11 +126,10 @@ public final class ReverseAndAnagramExample {
         System.out.println("Is palindrome? " + original.equals(reversedText));
     }
     
-    // Helper method to sort characters in a string
+    // Helper method to sort characters in a string using simple approach
     private static String sortString(String str) {
-        return str.chars()
-            .sorted()
-            .mapToObj(c -> String.valueOf((char) c))
-            .collect(Collectors.joining());
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
     }
 }
