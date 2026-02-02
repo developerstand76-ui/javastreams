@@ -36,7 +36,10 @@ public final class RunningTotalsExample {
         //   sum() - calculates sum of sublist
         // collect() - gathers all sums into list
         List<Integer> runningTotals = IntStream.range(0, amounts.size())
-            .mapToObj(i -> amounts.subList(0, i + 1).stream().mapToInt(Integer::intValue).sum())
+            .mapToObj(i -> amounts.subList(0, i + 1)
+            .stream()
+            .mapToInt(Integer::intValue)
+            .sum())
             .collect(Collectors.toList());
 
         System.out.println("Amounts: " + amounts);

@@ -29,6 +29,7 @@ public class ExamplesRunner {
             case "14", "sort" -> SortingExample.main(new String[]{});
             case "15", "flatmap" -> FlatMapExample.main(new String[]{});
             case "16", "lazy" -> LazyEvaluationExample.main(new String[]{});
+            case "17", "reverse" -> ReverseAndAnagramExample.main(new String[]{});
             case "all" -> runAll();
             default -> {
                 System.out.println("Unknown example: " + example);
@@ -58,6 +59,7 @@ public class ExamplesRunner {
         SortingExample.main(new String[]{});
         FlatMapExample.main(new String[]{});
         LazyEvaluationExample.main(new String[]{});
+        ReverseAndAnagramExample.main(new String[]{});
         
         System.out.println("\n╔═══════════════════════════════════════════════════════════════╗");
         System.out.println("║               ALL EXAMPLES COMPLETED SUCCESSFULLY               ║");
@@ -86,6 +88,7 @@ public class ExamplesRunner {
         System.out.println("  14 or sort         - Various Sorting Scenarios");
         System.out.println("  15 or flatmap      - FlatMap (Flatten Nested Collections)");
         System.out.println("  16 or lazy         - Lazy Evaluation (Deferred Execution)");
+        System.out.println("  17 or reverse      - Reverse Integer/String & Find Anagrams");
         System.out.println("  all                - Run all examples\n");
         System.out.println("Examples:");
         System.out.println("  java -cp target/streams-1.0-SNAPSHOT.jar com.test.ExamplesRunner 1");
